@@ -13,8 +13,8 @@ export default class ScriptRunner {
     const formContext = this.formContext;
     const interceptor = this.interceptor;
     if (eventJs && interceptor) {
-      eventJs = ReactHtmlParser(eventJs, {decodeEntities: false});
-      const executiveJs = `(${eventJs})(formContext,interceptor)`;
+      const eventJsModded = ReactHtmlParser(eventJs, {decodeEntities: false} );
+      const executiveJs = `(${eventJsModded})(formContext, interceptor)`;
       /* eslint-disable */
       eval(executiveJs);
     }
