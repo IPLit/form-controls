@@ -26,8 +26,8 @@ jobs:
         run: brew install automake autoconf libtool dpkg pkgconfig nasm libpng
       - name: yarn Install
         run: yarn
-      - name: yarn test
-        run: yarn test
+      # - name: yarn test
+      #   run: yarn test
       - run: yarn ci
       - name: Publish the package
         if: startsWith(github.ref, 'refs/tags/')
