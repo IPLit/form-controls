@@ -1,5 +1,4 @@
 import ScriptRunner from 'src/helpers/scriptRunner';
-import ReactHtmlParser from 'react-html-parser';
 
 export function executeEventsFromCurrentRecord(currentRecord, rootRecord, patient) {
   let recordTree = rootRecord || currentRecord;
@@ -12,9 +11,8 @@ export function executeEventsFromCurrentRecord(currentRecord, rootRecord, patien
       const eventKeys = Object.keys(record.control.events);
       eventKeys.forEach(eventKey => {
         const script = record.control.events[eventKey];
-        const scriptModed = ReactHtmlParser(script, {decodeEntities: true} );
         recordTree = new ScriptRunner(recordTree, patient, currentRecord)
-          .execute(scriptModed);
+          .execute(script);
       });
     }
   });
