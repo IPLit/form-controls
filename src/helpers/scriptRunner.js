@@ -4,8 +4,8 @@ import ReactHtmlParser from 'react-html-parser';
 
 export default class ScriptRunner {
 
-  constructor(rootRecord, patient, parentRecord) {
-    this.formContext = new FormContext(rootRecord, patient, parentRecord);
+  constructor(rootRecord, patient, parentRecord, formScope) {
+    this.formContext = new FormContext(rootRecord, patient, parentRecord, formScope);
     this.interceptor = httpInterceptor;
   }
 

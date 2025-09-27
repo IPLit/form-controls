@@ -7,10 +7,10 @@ import ScriptRunner from 'src/helpers/scriptRunner';
 
 window.renderWithControls =
   function renderWithControls(formDetails, observations, nodeId,
-                              collapse, patient, validateForm, locale, formTranslations) {
+                              collapse, patient, validateForm, locale, formTranslations, formScope) {
     const container = React.createElement(Container,
       { metadata: formDetails, observations, validate: true,
-        validateForm, collapse, patient, locale, translations: formTranslations });
+        validateForm, collapse, patient, locale, translations: formTranslations, formScope: formScope });
     return ReactDOM.render(container, document.getElementById(nodeId));
   };
 
@@ -22,7 +22,7 @@ window.unMountForm = (container) => {
 window.getRecordTree = (formDef, observations) =>
     new ControlRecordTreeBuilder().build(formDef, observations);
 
-window.runEventScript = (formData, eventScript, patient) => new ScriptRunner(formData, patient)
+window.runEventScript = (formData, eventScript, patient, formScope) => new ScriptRunner(formData, patient, null, formScope)
       .execute(eventScript);
 
 window.getObservations = (records) => (new ObservationMapper()).from(records);

@@ -2,11 +2,12 @@ import ControlRecordWrapper from './ControlRecordWrapper';
 
 export default class FormContext {
 
-  constructor(formRecords, patient, parentRecord) {
+  constructor(formRecords, patient, parentRecord, formScope) {
     this.wrapper = new ControlRecordWrapper(formRecords);
     this.rootRecord = formRecords;
     this.patient = patient;
     this.parentRecord = parentRecord;
+    this.formScope = formScope;
   }
 
   getName(recordTree) {
@@ -97,5 +98,9 @@ export default class FormContext {
       FormContext.logWarning(message);
     }
     return this.wrapper.set(records[0]);
+  }
+
+  getFormScope() {
+    return this.formScope;
   }
 }

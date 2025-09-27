@@ -33,11 +33,11 @@ export class Container extends addMoreDecorator(Component) {
     const initScript = this.props.metadata.events && this.props.metadata.events.onFormInit;
     let updatedTree;
     if (initScript) {
-      updatedTree = new ScriptRunner(this.state.data, this.props.patient).execute(initScript);
+      updatedTree = new ScriptRunner(this.state.data, this.props.patient, undefined, this.props.formScope).execute(initScript);
       this.setState({ data: updatedTree });
     }
     updatedTree = updatedTree || this.state.data;
-    updatedTree = executeEventsFromCurrentRecord(updatedTree, updatedTree, this.props.patient);
+    updatedTree = executeEventsFromCurrentRecord(updatedTree, updatedTree, this.props.patient, this.props.formScope);
     this.setState({
       data: updatedTree,
     });
@@ -52,7 +52,7 @@ export class Container extends addMoreDecorator(Component) {
     const script = eventScripts && eventScripts[eventName];
     if (script) {
       const parentRecordTree = new ControlRecordTreeMgr().findParentTree(this.state.data, sender);
-      const updatedTree = new ScriptRunner(this.state.data, this.props.patient, parentRecordTree)
+      const updatedTree = new ScriptRunner(this.state.data, this.props.patient, parentRecordTree, this.props.formScope)
             .execute(script);
       this.setState({
         data: updatedTree,
@@ -79,7 +79,6 @@ export class Container extends addMoreDecorator(Component) {
       this.props.onValueUpdated(this.state.data);
     }
   }
-
 
   getAddMoreMessage(rootTree, formFieldPath) {
     const targetRecordTree = ControlRecordTreeMgr.find(rootTree, formFieldPath);
@@ -186,6 +185,7 @@ export class Container extends addMoreDecorator(Component) {
       showNotification: this.showNotification,
       validate,
       validateForm: this.props.validateForm,
+      formScope: this.props.formScope,
     };
     const groupedRowControls = getGroupedControls(controls, 'row');
     const records = this.state.data.getActive().children.toArray();
@@ -221,5 +221,6 @@ Container.propTypes = {
   translations: PropTypes.object.isRequired,
   validate: PropTypes.bool.isRequired,
   validateForm: PropTypes.bool.isRequired,
+  formScope: PropTypes.object,
 };
 
